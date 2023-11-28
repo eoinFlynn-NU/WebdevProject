@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { HashRouter } from 'react-router-dom';
 import { Route, Routes, Navigate } from 'react-router';
+import Home from './home';
 
 function App() {
   return (
@@ -9,6 +9,7 @@ function App() {
       <div>
         <Routes>
           <Route path='/' element={<Navigate to="/HOME"/>}/>
+          <Route path='/HOME' element={<Home/>}/>
         </Routes>
       </div>
     </HashRouter>
