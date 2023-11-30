@@ -11,8 +11,8 @@ import Nav from "./componets/Nav/Nav";
 function App() {
     return (
         <HashRouter>
-            <Nav/>
-            <div>
+            <div className="w-100">
+                <Nav/>
                 <Routes>
                     <Route path='/home' element={<Home/>}/>
                     <Route path='/search' element={<Search/>}/>

@@ -1,10 +1,13 @@
 import "./Nav.css"
+import northeastern from '../../northeastern.png'
 
 import { Link, useLocation } from "react-router-dom";
 function Nav() {
   const { pathname } = useLocation();
   return (
-    <nav className="nav mt-2 container">
+    <nav className="nav bg-black nav-fill  justify-content-center w-100">
+        <Link to="/home"
+              className={`nav-link ${pathname.includes("home") ? "active" : ""}`}><img src={northeastern} alt="logo"/></Link>
         <Link to="/home"
               className={`nav-link ${pathname.includes("home") ? "active" : ""}`}>Home</Link>
         <Link to="/login"

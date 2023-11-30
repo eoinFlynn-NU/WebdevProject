@@ -1,3 +1,7 @@
+nav {
+    height: 75px;
+}
+
 a.nav-link {
     color: black;
     text-decoration: none;
@@ -5,5 +9,13 @@ a.nav-link {
 
 a.nav-link:hover {
     font-weight: bold;
-    color: black;
+    color: white;
+}
+
+.nav a{
+    color: grey;
+}
+
+img {
+    width: 40px;
 }
