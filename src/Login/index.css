@@ -1,0 +1,13 @@
+.sign-background {
+    height: 100vh;
+    background: linear-gradient(to right, #434343 0%, black 100%);}
+
+.sign-box{
+    position: relative;
+    top: 25%;
+    background: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+.sign-box{
+   color: grey;
+}
