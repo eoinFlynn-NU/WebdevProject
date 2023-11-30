@@ -2,33 +2,27 @@ import './App.css';
 import { HashRouter } from 'react-router-dom';
 import { Route, Routes, Navigate } from 'react-router';
 import Home from './home';
+import Search from "./Search";
+import Profile from "./Profile";
+import Register from "./Register";
+import Details from "./Details";
+import Nav from "./componets/Nav/Nav";
 
 function App() {
-  return (
-    <HashRouter>
-      <div>
-        <Routes>
-          <Route path='/' element={<Navigate to="/HOME"/>}/>
-          <Route path='/HOME' element={<Home/>}/>
-        </Routes>
+    return (
+        <HashRouter>
+            <Nav/>
+            <div>
+                <Routes>
+                    <Route path='/home' element={<Home/>}/>
+                    <Route path='/search' element={<Search/>}/>
+                    <Route path='/profile' element={<Profile/>}/>
+                    <Route path='/login' element={<Profile/>}/>
+                    <Route path='/register' element={<Register/>}/>
+                    <Route path='/detail' element={<Details/>}/>
+                </Routes>
       </div>
     </HashRouter>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 
