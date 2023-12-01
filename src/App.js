@@ -8,6 +8,7 @@ import Register from "./Register";
 import Details from "./Details";
 import Nav from "./componets/Nav/Nav";
 import Login from "./Login";
+import Review from "./Review";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path='/login' element={<Login/>}/>
                     <Route path='/register' element={<Register/>}/>
                     <Route path='/detail' element={<Details/>}/>
+                    <Route path='/review' element={<Review/>}/>
                 </Routes>
             </div>
     </HashRouter>

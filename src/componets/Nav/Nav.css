@@ -11,6 +11,10 @@ a.nav-link:hover {
     font-weight: bold;
     color: white;
 }
+a.nav-link:focus{
+    color: white;
+}
+
 
 .nav a{
     color: grey;
