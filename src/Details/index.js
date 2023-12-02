@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
-import {findMovieDetail} from "../Client/Detail/DetailClient";
+import {findMovieDetail, findReview} from "../Client/Detail/DetailClient";
 import './index.css'
 import {Link} from "react-router-dom";
 
 function Details() {
-    const movieTitle = "Dark Knight"
+    const movieTitle = "The Dark Knight"
     const [movie, setMovie] = useState([])
+    const [reviews, setReviews] = useState([])
     useEffect(() => {
         findMovieDetail(movieTitle).then(
             movie => {
@@ -14,30 +15,13 @@ function Details() {
         )
     }, []);
 
-    const reviews = [{
-        user: "user1",
-        review: "Every scene feels like a cataclysm waiting to happen, fitting for a film that builds, step-by-step, to the creation of a cataclysm machine. Oppenheimer both summons awe for what it took to build the bomb and for the changes it wrought.",
-        date: "2012-04-21",
-        rating: "8.7/10"
-    },
-        {
-            user: "user1",
-            review: "Every scene feels like a cataclysm waiting to happen, fitting for a film that builds, step-by-step, to the creation of a cataclysm machine. Oppenheimer both summons awe for what it took to build the bomb and for the changes it wrought.",
-            date: "2012-04-21",
-            rating: "8.7/10"
-        },
-        {
-            user: "user1",
-            review: "Every scene feels like a cataclysm waiting to happen, fitting for a film that builds, step-by-step, to the creation of a cataclysm machine. Oppenheimer both summons awe for what it took to build the bomb and for the changes it wrought.",
-            date: "2012-04-21",
-            rating: "8.7/10"
-        },
-        {
-            user: "user1",
-            review: "Every scene feels like a cataclysm waiting to happen, fitting for a film that builds, step-by-step, to the creation of a cataclysm machine. Oppenheimer both summons awe for what it took to build the bomb and for the changes it wrought.",
-            date: "2012-04-21",
-            rating: "8.7/10"
-        }]
+    useEffect(() =>{
+        findReview(movieTitle).then(
+            review => {
+                setReviews(review)
+            }
+        )
+    }, [])
 
     return (
         <div className="page w-100 d-flex flex-column">
@@ -62,6 +46,7 @@ function Details() {
                     </Link>
                 </div>
             </div>
+            {(reviews.length > 1) &&
             <div className="reviews ms-5 me-5 pt-4">
                 <h2 className="text-white">Review</h2>
                 <ul className="list-group list-group-flush">
@@ -80,7 +65,7 @@ function Details() {
                             ))
                     }
                 </ul>
-            </div>
+            </div>}
         </div>
     )
 }

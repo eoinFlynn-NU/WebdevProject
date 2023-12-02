@@ -1,12 +1,12 @@
 import './App.css';
 import {HashRouter} from 'react-router-dom';
 import {Route, Routes} from 'react-router';
-import Home from './home';
+import Home from './Home';
 import Search from "./Search";
 import Profile from "./Profile";
 import Register from "./Register";
 import Details from "./Details";
-import Nav from "./componets/Nav/Nav";
+import Nav from "./Componets/Nav/Nav";
 import Login from "./Login";
 import Review from "./Review";
 

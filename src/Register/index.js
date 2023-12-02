@@ -1,17 +1,24 @@
 import {useState} from "react";
 import {useNavigate} from "react-router";
-import {Link} from "react-router-dom";
+import * as client from "../Client/Detail/DetailClient";
 
 function Register() {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({
         firstname: "", lastname: "",
-        username: "", password: ""
+        username: "", password: "", role: ""
     });
     const navigate = useNavigate();
     const signUp = async () => {
-        navigate("/home");
+        try {
+            await client.signup(credentials)
+            navigate("/profile");
+        } catch (err) {
+            setError(err.response.data.message);
+        }
     };
+
+    console.log(credentials)
 
     return (
         <div className="sign-background">
@@ -40,6 +47,22 @@ function Register() {
                         <input id="exampleInputPassword1" className="form-control" value={credentials.password}
                                onChange={(e) => setCredentials({...credentials, password: e.target.value})}/>
                     </div>
+                    <div className="form-check">
+                        <input className="form-check-input" value="ADMIN" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                        onChange={(e) => setCredentials({...credentials, role: e.target.value})}/>
+                            <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                Admin
+                            </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input"  value="USER" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+                        onChange={(e) => setCredentials({...credentials, role: e.target.value})}/>
+                            <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                User
+                            </label>
+                    </div>
+
+
                     <div className="d-flex flex-row">
                         <button type="submit" className={"btn btn-success ms-auto"} onClick={signUp}> Sign Up</button>
                     </div>

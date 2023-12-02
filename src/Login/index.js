@@ -1,12 +1,18 @@
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import './index.css'
+import * as client from "../Client/Detail/DetailClient";
+import {useDispatch, useSelector} from "react-redux";
+import {setUser, updateUser} from "../Reducer/userReducer";
+
+
 import {Link} from "react-router-dom";
 
 function Login() {
     const [credentials, setCredentials] = useState({username: "", password: ""});
     const navigate = useNavigate();
     const signin = async () => {
+        await client.signIn(credentials);
         navigate("/home");
     };
 
