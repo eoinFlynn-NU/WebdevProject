@@ -14,6 +14,11 @@ export const findMovieDetail = async (movieTitle) => {
     return response.data;
 };
 
+export const findReviewsByUsername = async (username) => {
+    const response = await axios.get(`${REVIEWS_API}/username/${username}`);
+    return response.data;
+}
+
 export const signIn = async (credentials) => {
     const response = await request.post( `${USERS_API}/signin`, credentials );
     return response.data;
