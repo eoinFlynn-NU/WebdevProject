@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {useSelector} from "react-redux";
-
+import * as client from "../../src/Client/Detail/DetailClient"
 function Review({movie, clicked, setClicked}) {
     const user = useSelector((state) => state.userReducer.user);
-    const [review, setReview] = useState({movie: movie.Title, user: user.username ,date: "", rating: "", review: ""})
+    const [review, setReview] = useState({movie: movie.Title, username: user.username ,date: "", rating: "", review: ""})
     const openModal = () => {
         setClicked(true);
     };
@@ -12,8 +12,13 @@ function Review({movie, clicked, setClicked}) {
         setClicked(false);
     };
 
-    const submitForm = () =>{
-        setClicked(false);
+    const submitForm = async () =>{
+        try {
+            await client.postReview(review)
+            setClicked(false);
+        }catch (e){
+            console.log(e)
+        }
     }
     return (
         <div>
@@ -36,7 +41,6 @@ function Review({movie, clicked, setClicked}) {
                                         <input className="form-control"
                                             type="date"
                                                id="date"
-                                               value="2022-11-21"
                                                onChange={(e) => setReview({...review, date: e.target.value})}/>
                                     </div>
                                     <div className="form-group">

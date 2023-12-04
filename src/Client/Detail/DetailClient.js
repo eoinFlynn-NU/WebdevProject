@@ -30,8 +30,8 @@ export const findReview = async (movieName) => {
     return response.data;
 };
 
-export const postReview = async ()=>{
-    const response = await request.get(
-        `${REVIEWS_API}`)
+export const postReview = async (review)=>{
+    const response = await request.post(
+        `${REVIEWS_API}`, review)
     return response.data;
 }
