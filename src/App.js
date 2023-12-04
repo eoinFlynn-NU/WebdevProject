@@ -1,6 +1,6 @@
 import './App.css';
 import {HashRouter} from 'react-router-dom';
-import {Route, Routes} from 'react-router';
+import {Route, Routes, Navigate} from 'react-router';
 import Home from './Home';
 import Search from "./Search";
 import Profile from "./Profile";
@@ -16,6 +16,7 @@ function App() {
             <div className="html w-100">
                 <Nav/>
                 <Routes>
+                    <Route path='/' element={<Navigate to="/home"/>}/>
                     <Route path='/home' element={<Home/>}/>
                     <Route path='/search' element={<Search/>}/>
                     <Route path='/profile' element={<Profile/>}/>

@@ -1,7 +1,4 @@
 
-
-
-
 function AnonymousHome() {
 
     return (

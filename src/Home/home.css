@@ -1,0 +1,17 @@
+.home-background {
+    height: 100vh;
+    background: linear-gradient(to right, #434343 0%, black 100%);
+}
+
+.text-white {
+    color: white;
+}
+
+.movie-poster {
+    width: 15em;
+    height: 18em;
+}
+
+.top-padding {
+    padding-top: 30px;
+}
