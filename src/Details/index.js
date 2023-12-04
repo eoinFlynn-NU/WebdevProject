@@ -2,11 +2,18 @@ import {useEffect, useState} from "react";
 import {findMovieDetail, findReview} from "../Client/Detail/DetailClient";
 import './index.css'
 import {Link} from "react-router-dom";
+import Review from "../Review";
 
 function Details() {
     const movieTitle = "The Dark Knight"
     const [movie, setMovie] = useState([])
     const [reviews, setReviews] = useState([])
+    const [clicked, setClicked] = useState(false)
+
+    const openModal = () => {
+        setClicked(true)
+    }
+
     useEffect(() => {
         findMovieDetail(movieTitle).then(
             movie => {
@@ -41,9 +48,7 @@ function Details() {
                     <p>{movie.Actors}</p>
                 </div>
                 <div>
-                    <Link to={"/review"}>
-                        <button className="btn btn-secondary">Write Review</button>
-                    </Link>
+                        <button className="btn btn-secondary" onClick={openModal}>Write Review</button>
                 </div>
             </div>
             {(reviews.length > 1) &&
@@ -66,6 +71,7 @@ function Details() {
                     }
                 </ul>
             </div>}
+            { clicked && <Review movie={movie} clicked={clicked} setClicked = {setClicked}/> }
         </div>
     )
 }

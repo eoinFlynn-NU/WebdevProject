@@ -9,24 +9,28 @@ import Details from "./Details";
 import Nav from "./Componets/Nav/Nav";
 import Login from "./Login";
 import Review from "./Review";
+import {Provider} from "react-redux";
+import store from "./Store/store";
 
 function App() {
     return (
-        <HashRouter>
-            <div className="html w-100">
-                <Nav/>
-                <Routes>
-                    <Route path='/' element={<Navigate to="/home"/>}/>
-                    <Route path='/home' element={<Home/>}/>
-                    <Route path='/search' element={<Search/>}/>
-                    <Route path='/profile' element={<Profile/>}/>
-                    <Route path='/login' element={<Login/>}/>
-                    <Route path='/register' element={<Register/>}/>
-                    <Route path='/detail' element={<Details/>}/>
-                    <Route path='/review' element={<Review/>}/>
-                </Routes>
-            </div>
-    </HashRouter>
+        <Provider store={store}>
+            <HashRouter>
+                <div className="html w-100">
+                    <Nav/>
+                    <Routes>
+                        <Route path='/' element={<Navigate to="/home"/>}/>
+                        <Route path='/home' element={<Home/>}/>
+                        <Route path='/search' element={<Search/>}/>
+                        <Route path='/profile' element={<Profile/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                        <Route path='/register' element={<Register/>}/>
+                        <Route path='/detail' element={<Details/>}/>
+                        <Route path='/review' element={<Review/>}/>
+                    </Routes>
+                </div>
+            </HashRouter>
+        </Provider>
   );
 }
 

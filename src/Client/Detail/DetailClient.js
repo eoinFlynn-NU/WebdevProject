@@ -27,6 +27,11 @@ export const signup = async (credentials) => {
 export const findReview = async (movieName) => {
     const response = await request.get(
         `${REVIEWS_API}/${movieName}`);
-    console.log( response.data)
     return response.data;
 };
+
+export const postReview = async ()=>{
+    const response = await request.get(
+        `${REVIEWS_API}`)
+    return response.data;
+}
