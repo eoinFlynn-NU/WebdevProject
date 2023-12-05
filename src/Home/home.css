@@ -3,6 +3,10 @@
     background: linear-gradient(to right, #434343 0%, black 100%);
 }
 
+.container {
+    background: linear-gradient(to right, #434343 0%, black 100%);
+}
+
 .text-white {
     color: white;
 }
@@ -12,6 +16,20 @@
     height: 18em;
 }
 
+.review-poster {
+    width: 8em;
+    height: 11em;
+}
+
 .top-padding {
     padding-top: 30px;
+}
+
+.side-padding {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.review-username {
+    font-size: smaller;
 }

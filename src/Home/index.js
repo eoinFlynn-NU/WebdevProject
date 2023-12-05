@@ -6,8 +6,8 @@ import "./home.css"
 
 
 function Home(){
-    const userArrayLength = useSelector((state) => state.userReducer.user.length);
-    const isLoggedIn = userArrayLength > 0;
+    const user = useSelector((state) => state.userReducer.user);
+    const isLoggedIn = typeof user === 'object' && !Array.isArray(user);
 
     return(
         <div className="home-background">

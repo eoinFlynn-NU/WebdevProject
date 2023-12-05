@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {findMovieDetail} from "../Client/Detail/DetailClient";
+import {findRecentReviews} from "../Client/Reviews/ReviewClient"
 import "./home.css"
+import ReviewList from "./ReviewLists"
 
 function BaseHome() {
     const movieTitle1 = "The Dark Knight"
@@ -30,6 +32,15 @@ function BaseHome() {
             }
         )
     }, []);
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+        findRecentReviews().then(
+            reviews => {
+                setReviews(reviews)
+            }
+        )
+    }, []);
     return (
         <div>
             <h3 className="text-center text-white top-padding">The #1 movie review website for Northeastern students</h3>
@@ -45,6 +56,14 @@ function BaseHome() {
                     <img src={movie3.Poster} className="movie-poster" alt="movie poster 3"/>
                 </div>
                 <div className="col"></div>
+            </div>
+            <div className="container-fluid top-padding side-padding home-background ">
+                <div className="row">
+                    <div className="col">
+                        <h3 className="text-white">Recent Reviews</h3>
+                        {<ReviewList reviews={reviews}/>}
+                    </div>
+                </div>
             </div>
         </div>
     )
