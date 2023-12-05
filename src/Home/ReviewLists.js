@@ -39,7 +39,6 @@ function ReviewList({reviews}) {
                         <li key={index} className="list-group-item">
                             <div className="row">
                                 <div className="col-2 d-flex justify-content-center">
-                                    {console.log(posters[index])}
                                 <img src={posters[index]} className="review-poster" alt="user review poster"/>
                                 </div>
                                 <div className="col">
