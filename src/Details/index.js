@@ -1,14 +1,17 @@
 import {useEffect, useState} from "react";
-import {findMovieDetail, findReview} from "../Client/Detail/DetailClient";
+import {checkMovieAlreadyLike, findMovieDetail, findReview} from "../Client/Detail/DetailClient";
 import './index.css'
 import {Link} from "react-router-dom";
 import Review from "../Review";
+import {useSelector} from "react-redux";
 
 function Details() {
+    const user = useSelector((state) => state.userReducer.user);
     const movieTitle = "The Dark Knight"
     const [movie, setMovie] = useState([])
     const [reviews, setReviews] = useState([])
     const [clicked, setClicked] = useState(false)
+    let like = []
 
     const openModal = () => {
         setClicked(true)
@@ -30,6 +33,13 @@ function Details() {
         )
     }, [])
 
+    useEffect(() =>{
+        console.log(user.username)
+        console.log(movie.Title)
+        like = checkMovieAlreadyLike(user.username, movieTitle)
+    }, [])
+
+
     return (
         <div className="page w-100 d-flex flex-column">
             <div className="main-content pt-5 d-flex flex-row ms-5 me-5">
@@ -48,7 +58,11 @@ function Details() {
                     <p>{movie.Actors}</p>
                 </div>
                 <div>
-                        <button className="btn btn-secondary" onClick={openModal}>Write Review</button>
+                    <button className="btn btn-secondary mb-3" onClick={openModal}>Write Review</button>
+                    { (like.length > 1 ?
+                            <button className="btn btn-danger">Unlike Movie</button> :
+                            <button className="btn btn-danger">Like Movie</button>
+                    ) }
                 </div>
             </div>
             {(reviews.length > 1) &&
