@@ -1,9 +1,25 @@
 import {useState} from "react";
 import {useSelector} from "react-redux";
 import * as client from "../../src/Client/Detail/DetailClient"
-function Review({movie, clicked, setClicked}) {
+import {useNavigate} from "react-router";
+
+function Review({movie, clicked, setClicked, setYourReview, yourReivew}) {
+    const navigate = useNavigate();
     const user = useSelector((state) => state.userReducer.user);
-    const [review, setReview] = useState({movie: movie.Title, username: user.username ,date: "", rating: "", review: ""})
+    const yourReivewc = yourReivew.length === 1 ? yourReivew[0] : {
+        date: "",
+        rating: "",
+        review: ""
+    }
+
+    const [review, setReview] = useState({
+        movie: movie.Title,
+        username: user.username,
+        date: yourReivewc.date,
+        rating: yourReivewc.rating,
+        review: yourReivewc.review
+    })
+
     const openModal = () => {
         setClicked(true);
     };
@@ -12,23 +28,39 @@ function Review({movie, clicked, setClicked}) {
         setClicked(false);
     };
 
-    const submitForm = async () =>{
+    const submitForm = async () => {
         try {
-            await client.postReview(review)
+            if (user.username !== undefined) {
+                await client.postReview(review)
+                setYourReview([review])
+                setClicked(false);
+            }else {
+                navigate("/register")
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const updateReview = async () => {
+        try {
+            await client.updateReview(user.username, movie.Title, review)
+            setYourReview([review])
             setClicked(false);
-        }catch (e){
+        } catch (e) {
             console.log(e)
         }
     }
     return (
         <div>
             {clicked && (
-                <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+                <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Review</h5>
-                                <button type="button" className="close btn btn-danger" onClick={closeModal} aria-label="Close">
+                                <button type="button" className="close btn btn-danger" onClick={closeModal}
+                                        aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -39,8 +71,9 @@ function Review({movie, clicked, setClicked}) {
                                     <div className="form-group">
                                         <label htmlFor="date">Date:</label>
                                         <input className="form-control"
-                                            type="date"
+                                               type="date"
                                                id="date"
+                                               defaultValue={yourReivewc.date.substring(0, 10)}
                                                onChange={(e) => setReview({...review, date: e.target.value})}/>
                                     </div>
                                     <div className="form-group">
@@ -52,6 +85,7 @@ function Review({movie, clicked, setClicked}) {
                                                step="0.1"
                                                max="10"
                                                id="rating"
+                                               defaultValue={yourReivewc.rating}
                                                onChange={(e) => setReview({...review, rating: e.target.value})}/>
                                     </div>
 
@@ -59,7 +93,11 @@ function Review({movie, clicked, setClicked}) {
                                         <label htmlFor="exampleFormControlTextarea1">Description:</label>
                                         <textarea className="form-control" id="exampleFormControlTextarea1"
                                                   rows="5"
-                                                  onChange={(e) => setReview({...review, review: e.target.value})}></textarea>
+                                                  defaultValue={yourReivewc.review}
+                                                  onChange={(e) => setReview({
+                                                      ...review,
+                                                      review: e.target.value
+                                                  })}></textarea>
                                     </div>
                                 </form>
                             </div>
@@ -67,9 +105,14 @@ function Review({movie, clicked, setClicked}) {
                                 <button type="button" className="btn btn-secondary" onClick={closeModal}>
                                     Close
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={submitForm}>
-                                    Submit
-                                </button>
+                                {(yourReivewc.review === "") ?
+                                    <button type="button" className="btn btn-primary" onClick={submitForm}>
+                                        Submit
+                                    </button> :
+                                    <button type="button" className="btn btn-primary" onClick={updateReview}>
+                                        Modify
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>

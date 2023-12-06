@@ -4,7 +4,7 @@ export const apiKey = process.env.API_KEY
 const OMDb = `https://www.omdbapi.com/?apikey=7bc5227b&plot=full&`
 const USERS_API = `${BASE_API}/api/users`
 const REVIEWS_API = `${BASE_API}/api/review`
-const LIKE_API = `${BASE_API}/api/like`
+const LIKE_API = `${BASE_API}/api/liked`
 
 const request = axios.create({
     withCredentials: true,
@@ -51,12 +51,17 @@ export const addToLikedList = async (username, movie) =>{
 
 export const checkMovieAlreadyLike = async (username, movie) =>{
     const response = await request.get(
-        `${LIKE_API}/username=${username}/movie=${movie}`)
+        `${LIKE_API}/username/${username}/movie/${movie}`)
     return response.data;
 }
 
 export const removeLikedMovie = async (username, movie) =>{
     const response = await request.delete(
-        `${LIKE_API}/${username}/${movie}`)
+        `${LIKE_API}/username/${username}/movie/${movie}`)
+    return response.data;
+}
+
+export const updateReview = async (username,movie, review) => {
+    const response = await request.patch(`${REVIEWS_API}/username/${username}/movie/${movie}`, review);
     return response.data;
 }
