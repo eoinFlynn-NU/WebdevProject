@@ -17,7 +17,7 @@ function Login() {
         await client.signIn(credentials);
         const user = await accountClient.account()
         dispatch(setUser(user))
-        navigate("/profile");
+        navigate(`/profile/${user._id}`);
     };
 
     return (

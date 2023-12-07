@@ -8,11 +8,12 @@ function ReviewForProfile({clicked, setClicked, setYourReview, yourReivew, listR
     const [movie, setMovie] = useState([])
 
     const [review, setReview] = useState({
+        _id: yourReivew._id,
         movie: yourReivew.movie,
         username: yourReivew.username,
         date: yourReivew.date,
         rating: yourReivew.rating,
-        review: yourReivew.review
+        review: yourReivew.review,
     })
 
     useEffect(() => {
@@ -28,7 +29,7 @@ function ReviewForProfile({clicked, setClicked, setYourReview, yourReivew, listR
     };
     const updateReview = async () => {
         try {
-            await client.updateReview(user.username, review.movie, review.review)
+            await client.updateReview(review)
             const newList = listReivews.filter((review) =>(review.movie !== yourReivew.movie))
             newList.push(review)
             setYourReview(newList)

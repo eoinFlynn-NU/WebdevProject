@@ -13,6 +13,7 @@ function Review({movie, clicked, setClicked, setYourReview, yourReivew}) {
     }
 
     const [review, setReview] = useState({
+        _id: yourReivewc._id,
         movie: movie.Title,
         username: user.username,
         date: yourReivewc.date,
@@ -44,7 +45,7 @@ function Review({movie, clicked, setClicked, setYourReview, yourReivew}) {
 
     const updateReview = async () => {
         try {
-            await client.updateReview(user.username, movie.Title, review)
+            await client.updateReview(review)
             setYourReview([review])
             setClicked(false);
         } catch (e) {

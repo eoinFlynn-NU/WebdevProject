@@ -66,7 +66,7 @@ export const removeLikedMovie = async (username, movie) =>{
     return response.data;
 }
 
-export const updateReview = async (username,movie, review) => {
-    const response = await request.put(`${REVIEWS_API}/username/${username}/movie/${movie}`, review);
+export const updateReview = async (review) => {
+    const response = await request.put(`${REVIEWS_API}/${review._id}`, review);
     return response.data;
 }

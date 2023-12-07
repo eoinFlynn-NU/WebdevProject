@@ -3,20 +3,45 @@ import "./index.css"
 import MovieCards from "../Componets/MovieCards";
 import {useEffect, useState} from "react";
 import {deleteReviews, findRecentReviewsByUsername} from "../Client/Reviews/ReviewClient";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {findMoviedByUser} from "../Client/LikedMovieClient/LikedMovieClient";
 import ReviewForProfile from "../ReviewForProfile";
 import EditProfile from "../EditProfile";
+import {findUser} from "../Client/Account /AccountClient";
 
 function Profile() {
-    const user = useSelector((state) => state.userReducer.user)
-    const likedMovie = ["The Dark Knight", "Iron Man", "Whiplash" , "Iron Man","Iron Man" ]
+    let {id} = useParams()
+    let user = useSelector((state) => state.userReducer.user)
+    if (id === undefined) {
+        id = user._id
+    }
+    const [viewUser, setViewUser] = useState({
+        _id: id,
+        username: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        dob: "",
+        role: ""
+    })
+
+    useEffect(() => {
+        if (user._id === undefined) {
+            findUser(id).then((currentUser) => {
+                    setViewUser(currentUser)
+                }
+            )
+        } else {
+            setViewUser(user)
+        }
+    }, [])
     const [favoriteMovie, setYourFavoriteMovie] = useState([])
     const [yourReview, setReviews] = useState([])
     const [clicked, setClicked] = useState(false)
     const [edit, setEdit] = useState(false)
     const [currentReview, setCurrentReview] = useState()
-
+    const sameUser = user._id === viewUser._id
     const openModal = (review) => {
         setCurrentReview(review)
         setClicked(true)
@@ -26,20 +51,22 @@ function Profile() {
         setEdit(true)
     }
     useEffect(() => {
-        findMoviedByUser(user.username).then(
-            favoriteMovie => {
-                setYourFavoriteMovie(favoriteMovie)
-            })
-    }, [])
-
-    console.log(favoriteMovie)
+        if (viewUser.username !== "") {
+            findMoviedByUser(viewUser.username).then(
+                favoriteMovie => {
+                    setYourFavoriteMovie(favoriteMovie)
+                })
+        }
+    }, [viewUser])
 
     useEffect(() => {
-        findRecentReviewsByUsername(user.username).then(
-            reviews => {
-                setReviews(reviews)
-            })
-    }, [])
+        if (viewUser.username !== "") {
+            findRecentReviewsByUsername(viewUser.username).then(
+                reviews => {
+                    setReviews(reviews)
+                })
+        }
+    }, [viewUser])
 
     const deleteReview = async (username, movie) => {
         await deleteReviews(username, movie)
@@ -53,15 +80,19 @@ function Profile() {
             <div className="row mb-3 g-0">
                 <div>
                     <div className="text-center">
-                        <h5 className="my-3 text-white">{user.firstName + " " + user.lastName}</h5>
-                        <p className=" mb-1 text-white">{user.email}</p>
-                        <p className=" mb-4 text-white">{user.dob.substring(0, 10)}</p>
+                        <h5 className="my-3 text-white">{viewUser.firstName + " " + viewUser.lastName}</h5>
+                        <p className=" mb-1 text-white">{viewUser.email}</p>
+                        <p className=" mb-4 text-white">{viewUser.dob.substring(0, 10)}</p>
                         <div className="d-flex justify-content-center mb-2">
-                            <button type="button" className="btn btn-primary">Follow</button>
-                            <button type="button" className="btn btn-outline-primary ms-1">Message</button>
-                            <button onClick={openEditModal} className='btn btn-success ms-1'>
-                                Edit Profile
-                            </button>
+                            {(user._id !== viewUser._id) &&
+                                <div>
+                                    <button type="button" className="btn btn-primary">Follow</button>
+                                    <button type="button" className="btn btn-outline-primary ms-1">Message</button>
+                                </div>}
+                            {(user._id === viewUser._id) &&
+                                <button onClick={openEditModal} className='btn btn-success ms-1'>
+                                    Edit Profile
+                                </button>}
                         </div>
                     </div>
                 </div>
@@ -73,7 +104,7 @@ function Profile() {
                 <div className="d-flex flex-wrap flex-row align-items-center justify-content-center">
                     {
                         favoriteMovie.map((movie, index) => (
-                            <MovieCards key={index} movies={movie} favoriteMovie={favoriteMovie} setYourFavoriteMovie={setYourFavoriteMovie}/>
+                            <MovieCards sameUser={sameUser} key={index} movies={movie} favoriteMovie={favoriteMovie} setYourFavoriteMovie={setYourFavoriteMovie}/>
                         ))
                     }
                 </div>
@@ -98,6 +129,7 @@ function Profile() {
                                                     <p>Rating: {review.rating}</p>
                                                     <p>{review.review}</p>
                                                 </div>
+                                                {(user._id === viewUser._id)&&
                                                 <div className="ms-auto">
                                                     <button onClick={() => deleteReview(review.username, review.movie)}
                                                             className="btn btn-danger me-2">Delete
@@ -106,6 +138,7 @@ function Profile() {
                                                             className="btn btn-secondary">Modify
                                                     </button>
                                                 </div>
+                                                }
                                             </div>
                                         </li>
                                     ))

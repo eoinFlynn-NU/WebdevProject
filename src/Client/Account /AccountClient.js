@@ -9,3 +9,8 @@ export const account = async () => {
     const response = await request.post(`${USERS_API}/account`);
     return response.data;
 };
+
+export const findUser = async (userid) =>{
+    const response = await request.get(`${USERS_API}/${userid}`);
+    return response.data;
+}

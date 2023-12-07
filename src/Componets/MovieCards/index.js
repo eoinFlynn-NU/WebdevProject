@@ -3,7 +3,7 @@ import {findMovieDetail, removeLikedMovie} from "../../Client/Detail/DetailClien
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
-function MovieCards({key, movies, favoriteMovie, setYourFavoriteMovie}) {
+function MovieCards({sameUser, key, movies, favoriteMovie, setYourFavoriteMovie}) {
     const user = useSelector((state) => state.userReducer.user);
     const [movie, setMovie] = useState([])
     useEffect(() => {
@@ -37,9 +37,9 @@ function MovieCards({key, movies, favoriteMovie, setYourFavoriteMovie}) {
                         <p className="mb-0">Year: {movie.Year}</p>
                         <p>Rating: {movie.imdbRating}</p>
                     </div>
-                    <button className="btn btn-danger" onClick={() => unlikedMovie(user.username, movie.Title)}>
+                    {sameUser && <button className="btn btn-danger" onClick={() => unlikedMovie(user.username, movie.Title)}>
                         Remove
-                    </button>
+                    </button>}
                 </div>
             </div>
         </Link>
