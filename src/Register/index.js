@@ -18,8 +18,6 @@ function Register() {
         }
     };
 
-    console.log(credentials)
-
     return (
         <div className="sign-background">
             <div className=" sign-box bg-secondary w-50 ms-auto me-auto p-3 border rounded border-dark">

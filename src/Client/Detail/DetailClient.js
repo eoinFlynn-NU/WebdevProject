@@ -20,6 +20,11 @@ export const signIn = async (credentials) => {
     return response.data;
 };
 
+export const updateProfile = async (profile) => {
+    const response = await request.put( `${USERS_API}/${profile._id}`, profile );
+    return response.data;
+};
+
 export const signup = async (credentials) => {
     const response = await request.post(
         `${USERS_API}/signup`, credentials);
@@ -62,6 +67,6 @@ export const removeLikedMovie = async (username, movie) =>{
 }
 
 export const updateReview = async (username,movie, review) => {
-    const response = await request.patch(`${REVIEWS_API}/username/${username}/movie/${movie}`, review);
+    const response = await request.put(`${REVIEWS_API}/username/${username}/movie/${movie}`, review);
     return response.data;
 }

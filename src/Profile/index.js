@@ -5,9 +5,8 @@ import {useEffect, useState} from "react";
 import {deleteReviews, findRecentReviewsByUsername} from "../Client/Reviews/ReviewClient";
 import {Link} from "react-router-dom";
 import {findMoviedByUser} from "../Client/LikedMovieClient/LikedMovieClient";
-import {removeLikedMovie} from "../Client/Detail/DetailClient";
-import Review from "../Review";
 import ReviewForProfile from "../ReviewForProfile";
+import EditProfile from "../EditProfile";
 
 function Profile() {
     const user = useSelector((state) => state.userReducer.user)
@@ -15,11 +14,16 @@ function Profile() {
     const [favoriteMovie, setYourFavoriteMovie] = useState([])
     const [yourReview, setReviews] = useState([])
     const [clicked, setClicked] = useState(false)
+    const [edit, setEdit] = useState(false)
     const [currentReview, setCurrentReview] = useState()
 
     const openModal = (review) => {
         setCurrentReview(review)
         setClicked(true)
+    }
+
+    const openEditModal = () => {
+        setEdit(true)
     }
     useEffect(() => {
         findMoviedByUser(user.username).then(
@@ -49,12 +53,15 @@ function Profile() {
             <div className="row mb-3 g-0">
                 <div>
                     <div className="text-center">
-                        <h5 className="my-3 text-white">{user.firstName + user.lastName}</h5>
+                        <h5 className="my-3 text-white">{user.firstName + " " + user.lastName}</h5>
                         <p className=" mb-1 text-white">{user.email}</p>
                         <p className=" mb-4 text-white">{user.dob.substring(0, 10)}</p>
                         <div className="d-flex justify-content-center mb-2">
                             <button type="button" className="btn btn-primary">Follow</button>
                             <button type="button" className="btn btn-outline-primary ms-1">Message</button>
+                            <button onClick={openEditModal} className='btn btn-success ms-1'>
+                                Edit Profile
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -105,6 +112,7 @@ function Profile() {
                             }
                         </ul>
                         {clicked && <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews} yourReivew={currentReview} listReivews={yourReview}/>}
+                        {edit && <EditProfile setEdit={setEdit} edit={edit}/>}
                     </div>
                 }
             </div>

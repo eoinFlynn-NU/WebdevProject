@@ -26,10 +26,8 @@ function ReviewForProfile({clicked, setClicked, setYourReview, yourReivew, listR
     const closeModal = () => {
         setClicked(false);
     };
-    console.log(review.review)
     const updateReview = async () => {
         try {
-            console.log(review.review)
             await client.updateReview(user.username, review.movie, review.review)
             const newList = listReivews.filter((review) =>(review.movie !== yourReivew.movie))
             newList.push(review)
