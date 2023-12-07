@@ -1,0 +1,4 @@
+.home-background {
+    height: 100vh;
+    background: linear-gradient(to right, #434343 0%, black 100%);
+}
