@@ -7,7 +7,7 @@ import {
     removeLikedMovie
 } from "../Client/Detail/DetailClient";
 import './index.css'
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Review from "../Review";
 import {useSelector} from "react-redux";
 import {deleteReviews, findReviewByUser} from "../Client/Reviews/ReviewClient";
@@ -15,13 +15,13 @@ import {useNavigate} from "react-router";
 
 function Details() {
     const user = useSelector((state) => state.userReducer.user);
-    const movieTitle = "The Dark Knight"
+    const {movieTitle} = useParams()
     const [movie, setMovie] = useState([])
     const [reviews, setReviews] = useState([])
     const [yourReview, setYourReview] = useState([])
-    const [clicked, setClicked] = useState(false)
     const [liked, setLiked] = useState(false)
     const navigate = useNavigate();
+    const [clicked, setClicked] = useState(false)
 
     const openModal = () => {
         setClicked(true)
@@ -62,7 +62,6 @@ function Details() {
     }, [])
 
     const likeMovie = () => {
-        console.log(user.username !== undefined)
         if (user.username !== undefined) {
             try {
                 addToLikedList(user.username, movieTitle)
@@ -96,7 +95,7 @@ function Details() {
         }
     }
     return (
-        <div className="page w-100 d-flex flex-column">
+        <div className="page w-100 h-auto d-flex flex-column">
             <div className="main-content pt-5 d-flex flex-row ms-5 me-5">
                 <div className="me-5 ">
                     <img src={movie.Poster} className="" alt="Responsive image"/>
