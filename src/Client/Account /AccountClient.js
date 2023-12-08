@@ -14,3 +14,8 @@ export const findUser = async (userid) =>{
     const response = await request.get(`${USERS_API}/${userid}`);
     return response.data;
 }
+
+export const signOutUser = async() =>{
+    const response = await request.post(`${USERS_API}/signout`);
+    return response.data;
+}
