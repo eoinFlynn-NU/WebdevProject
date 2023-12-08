@@ -9,12 +9,19 @@ import {useEffect, useState} from "react";
 function Search(){
     const [userResults, setUserResults] = useState([]);
     const [movieResults, setMovieResults] = useState([]);
+    const [pageNum, setPageNum] = useState(1)
     const handleSearch = async (searchTerm) => {
-        console.log('Searching for:', searchTerm);
-        setUserResults(JSON.parse(await searchForUsers(searchTerm)))
-        setMovieResults(JSON.parse(await findMovieList(searchTerm)).Search)
+        console.log(pageNum)
+        //setUserResults(JSON.parse(await searchForUsers(searchTerm)))
+        const response = await findMovieList(searchTerm, pageNum)
+        setMovieResults(response.Search)
+        console.log(response)
+        //const response_json = JSON.parse(response)
+        //setMovieResults(JSON.parse(await findMovieList(searchTerm)))
+        //console.log(response_json)
+        setPageNum(pageNum+1)
       };
-    console.log(userResults)
+    //console.log(userResults)
     return(
         <div className="container-fluid home-background">
             <h1 className="text-white">Search for Movies or Users</h1>
@@ -27,6 +34,7 @@ function Search(){
                     <UserResults results={userResults}/>
                 </div>
             </div>
+            <button className="btn btn-primary" onClick={handleSearch}>Next Page</button>
         </div>
     )
 }
