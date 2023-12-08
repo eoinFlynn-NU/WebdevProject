@@ -29,7 +29,7 @@ function Nav() {
 
             <Link to="/search"
                   className={`nav-link ${pathname.includes("search") ? "active" : ""}`}>Search</Link>
-            {user._id !== undefined && <Link to="/profile"
+            {user._id !== undefined && <Link to={`/profile/${user._id}`}
                                              className={`nav-link ${pathname.includes("profile") ? "active" : ""}`}>Profile</Link>}
             {user._id === undefined &&
                 <Link to="/login"

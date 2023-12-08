@@ -14,7 +14,7 @@ function FollowList({clicked, setClicked, list}) {
     return (
         <div>
             {clicked && (
-                <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
+                <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block' }}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -24,7 +24,7 @@ function FollowList({clicked, setClicked, list}) {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div className="modal-body d-flex flex-row">
+                            <div className="modal-body d-flex flex-row" >
                                 <ul className="list-group">
                                     {list.map((follower, index) => (
                                         <Link to={`/profile/${follower.follower}`}>
