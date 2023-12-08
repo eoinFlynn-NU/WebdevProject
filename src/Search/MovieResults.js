@@ -3,7 +3,6 @@ import "./search.css"
 
 
 function MovieResults ({results}) {
-    console.log("Movie REsults:")
     return (
         <div>
             <ul className="list-group">

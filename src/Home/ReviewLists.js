@@ -9,8 +9,7 @@ function ReviewList({reviews}) {
     const fetchMovies = async () => {
         try {
           const movies = await Promise.all(reviewMovieTitles.map(title => findMovieDetail(title)));
-          const posters = movies.map(movie => movie.Poster)
-          return posters
+          return movies
         } catch (error) {
           console.error('Error fetching movies:', error);
         }
@@ -18,16 +17,20 @@ function ReviewList({reviews}) {
       const [posters, setPosters] = useState([]);
 
       useEffect(() => {
-        const storedPosters = localStorage.getItem('posters');
+        // const storedPosters = localStorage.getItem('posters');
     
-        if (storedPosters) {
-          setPosters(JSON.parse(storedPosters));
-        } else {
-          fetchMovies().then(posters => {
+        // if (storedPosters !== []) {
+        //   console.log("Stored posters:", storedPosters)
+        //   setPosters(JSON.parse(storedPosters));
+        // } else {
+          fetchMovies().then(movies => {
+            console.log('Movies:', movies)
+            const posters = movies.map(movie => movie.Poster)
+            console.log("Posters:", posters)
             setPosters(posters);
             localStorage.setItem('posters', JSON.stringify(posters));
           });
-        }
+        //}
       }, []);
 
 
