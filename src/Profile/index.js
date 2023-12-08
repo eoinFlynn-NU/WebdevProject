@@ -1,18 +1,19 @@
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import "./index.css"
 import MovieCards from "../Componets/MovieCards";
-import {useEffect, useState} from "react";
-import {deleteReviews, findRecentReviewsByUsername} from "../Client/Reviews/ReviewClient";
-import {Link, useParams} from "react-router-dom";
-import {findMoviedByUser} from "../Client/LikedMovieClient/LikedMovieClient";
+import { useEffect, useState } from "react";
+import { deleteReviews, findRecentReviewsByUsername } from "../Client/Reviews/ReviewClient";
+import { Link, useParams } from "react-router-dom";
+import { findMoviedByUser } from "../Client/LikedMovieClient/LikedMovieClient";
 import ReviewForProfile from "../ReviewForProfile";
 import EditProfile from "../EditProfile";
-import {findUser} from "../Client/Account /AccountClient";
+import { findUser } from "../Client/Account /AccountClient";
 import FollowList from "../Componets/followList";
-import {findFollower, findFollowing, isItFollowing} from "../Client/followClient/followClient";
+import { useNavigate } from "react-router";
+import { findFollower, findFollowing, isItFollowing } from "../Client/followClient/followClient";
 
 function Profile() {
-    let {userId} = useParams()
+    let { userId } = useParams()
     let user = useSelector((state) => state.userReducer.user)
     if (userId === undefined) {
         userId = user._id
@@ -32,8 +33,8 @@ function Profile() {
     useEffect(() => {
         if (viewUser._id !== undefined) {
             findUser(userId).then((currentUser) => {
-                    setViewUser(currentUser)
-                }
+                setViewUser(currentUser)
+            }
             )
         } else {
             setViewUser(user)
@@ -49,9 +50,12 @@ function Profile() {
     const [following, setFollowing] = useState([])
     const [follower, setFollower] = useState([])
     const sameUser = user._id === viewUser._id
+    const navigate = useNavigate();
 
-   
-    
+    const goToAdmin = () => {
+        navigate(`/admin`);
+    }
+
 
     const [isItFollow, setisItFollow] = useState(false)
     const openModal = (review) => {
@@ -74,8 +78,8 @@ function Profile() {
     useEffect(() => {
         if (viewUser.username !== "" && user.username !== undefined) {
             isItFollowing(user._id, userId).then((isItfollow) => {
-                setisItFollow(isItfollow.length ===1)
-                }
+                setisItFollow(isItfollow.length === 1)
+            }
             )
         }
     }, [viewUser])
@@ -104,7 +108,7 @@ function Profile() {
                 following => {
                     setFollowing(following)
                 })
-        }else{
+        } else {
             findFollowing(viewUser._id).then(
                 follower => {
                     setFollowing(follower)
@@ -118,7 +122,7 @@ function Profile() {
                 follower => {
                     setFollower(follower)
                 })
-        }else{
+        } else {
             findFollower(viewUser._id).then(
                 follower => {
                     setFollower(follower)
@@ -160,7 +164,7 @@ function Profile() {
 
     return (
         <div className="page w-100 p-0">
-                        <div className="row">
+            <div className="row">
                 <div className="col-5 profile">
                     <div>
                         <h1 className="text-center" >profile</h1>
@@ -174,8 +178,8 @@ function Profile() {
                             {(user._id !== viewUser._id) &&
                                 <div>
                                     {!isItFollow ?
-                                    <button type="button" onClick={followUser} className="btn btn-primary me-2">Follow</button>:
-                                    <button type="button" onClick={unfollowUser} className="btn btn-primary me-2">UnFollow</button>
+                                        <button type="button" onClick={followUser} className="btn btn-primary me-2">Follow</button> :
+                                        <button type="button" onClick={unfollowUser} className="btn btn-primary me-2">UnFollow</button>
                                     }
                                     <button type="button" className="btn btn-outline-primary me-2">Message</button>
                                 </div>}
@@ -183,14 +187,14 @@ function Profile() {
                                 <button onClick={openEditModal} className='btn btn-success ms-1 me-2'>
                                     Edit Profile
                                 </button>}
-                                {(user.role === 'ADMIN' && user._id === viewUser._id) &&
-                                <button className='btn btn-info ms-1 me-2'>
+                            {(user.role === 'ADMIN' && user._id === viewUser._id) &&
+                                <button className='btn btn-info ms-1 me-2' onClick={() =>goToAdmin()}>
                                     Admin Page
                                 </button>}
-                            
+
                         </div>
-                
-                        
+
+
                     </div>
 
 
@@ -199,20 +203,20 @@ function Profile() {
                     <h1 className="text-white">Latest Review</h1>
                     {yourReview.length !== 0 &&
                         <div className="text-white d-flex flex-column" style={{ width: '60rem', overflowX: 'auto' }}>
-                        <Link to={"/profile"} className="text-decoration-none">
-                            <h5>{mostRecentObject.username}</h5>
-                        </Link>
-                        <h>Date: {mostRecentObject.date}</h>
-                        <p>Movie: {mostRecentObject.movie}</p>
-                        <p>Rating: {mostRecentObject.rating}</p>
-                        <p>{mostRecentObject.review}</p>
-                    </div>
+                            <Link to={"/profile"} className="text-decoration-none">
+                                <h5>{mostRecentObject.username}</h5>
+                            </Link>
+                            <h>Date: {mostRecentObject.date}</h>
+                            <p>Movie: {mostRecentObject.movie}</p>
+                            <p>Rating: {mostRecentObject.rating}</p>
+                            <p>{mostRecentObject.review}</p>
+                        </div>
 
                     }
                 </div>
             </div>
 
-            
+
             <div className="row g-0">
                 <div className="text-center">
                     <h1 className="text-white">Favorite Movie</h1>
@@ -220,7 +224,7 @@ function Profile() {
                 <div className="d-flex flex-wrap flex-row align-items-center justify-content-center">
                     {
                         favoriteMovie.map((movie, index) => (
-                            <MovieCards sameUser={sameUser} key={index} movies={movie} favoriteMovie={favoriteMovie} setYourFavoriteMovie={setYourFavoriteMovie}/>
+                            <MovieCards sameUser={sameUser} key={index} movies={movie} favoriteMovie={favoriteMovie} setYourFavoriteMovie={setYourFavoriteMovie} />
                         ))
                     }
                 </div>
@@ -245,15 +249,15 @@ function Profile() {
                                                     <p>Rating: {review.rating}</p>
                                                     <p>{review.review}</p>
                                                 </div>
-                                                {(user._id === viewUser._id)&&
-                                                <div className="ms-auto">
-                                                    <button onClick={() => deleteReview(review.username, review.movie)}
+                                                {(user._id === viewUser._id) &&
+                                                    <div className="ms-auto">
+                                                        <button onClick={() => deleteReview(review.username, review.movie)}
                                                             className="btn btn-danger me-2">Delete
-                                                    </button>
-                                                    <button onClick={() => openModal(review)}
+                                                        </button>
+                                                        <button onClick={() => openModal(review)}
                                                             className="btn btn-secondary">Modify
-                                                    </button>
-                                                </div>
+                                                        </button>
+                                                    </div>
                                                 }
                                             </div>
                                         </li>
@@ -262,10 +266,10 @@ function Profile() {
                         </ul>
                         {clicked &&
                             <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews}
-                                              yourReivew={currentReview} listReivews={yourReview}/>}
-                        {edit && <EditProfile setEdit={setEdit} edit={edit}/>}
-                        {followerClicked && <FollowList clicked={followerClicked} setClicked={setFollowerClicked} list={follower}/>}
-                        {followingClicked && <FollowList clicked={followingClicked} setClicked={setFollowingClicked} list={following}/>}
+                                yourReivew={currentReview} listReivews={yourReview} />}
+                        {edit && <EditProfile setEdit={setEdit} edit={edit} />}
+                        {followerClicked && <FollowList clicked={followerClicked} setClicked={setFollowerClicked} list={follower} />}
+                        {followingClicked && <FollowList clicked={followingClicked} setClicked={setFollowingClicked} list={following} />}
                     </div>
                 }
             </div>

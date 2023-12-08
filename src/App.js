@@ -4,6 +4,7 @@ import {Route, Routes, Navigate} from 'react-router';
 import Home from './Home';
 import Search from "./Search";
 import Profile from "./Profile";
+import Admin from "./Admin"
 import Register from "./Register";
 import Details from "./Details";
 import Nav from "./Componets/Nav/Nav";
@@ -26,6 +27,7 @@ function App() {
                         <Route path='/profile/' element={<Profile/>}/>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register' element={<Register/>}/>
+                        <Route path='/admin' element={<Admin/>}/>
                         <Route path='/detail/:movieTitle' element={<Details/>}/>
                     </Routes>
                 </div>

@@ -23,3 +23,9 @@ export const searchForUsers = async (searchTerm) => {
     const response = await request.get(`${USERS_API}/search/${searchTerm}`)
     return response.data
 }
+
+export const findAllUsers = async () => {
+    const response = await request.get(`${USERS_API}`);
+    return response.data;
+  };
+  
