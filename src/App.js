@@ -22,8 +22,8 @@ function App() {
                         <Route path='/' element={<Navigate to="/home"/>}/>
                         <Route path='/home' element={<Home/>}/>
                         <Route path='/search' element={<Search/>}/>
+                        <Route path='/profile/:userId' element={<Profile/>}/>
                         <Route path='/profile/' element={<Profile/>}/>
-                        <Route path='/profile/:id' element={<Profile/>}/>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register' element={<Register/>}/>
                         <Route path='/detail/:movieTitle' element={<Details/>}/>
