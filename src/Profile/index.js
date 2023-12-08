@@ -49,6 +49,10 @@ function Profile() {
     const [following, setFollowing] = useState([])
     const [follower, setFollower] = useState([])
     const sameUser = user._id === viewUser._id
+
+   
+    
+
     const [isItFollow, setisItFollow] = useState(false)
     const openModal = (review) => {
         setCurrentReview(review)
@@ -121,6 +125,7 @@ function Profile() {
                 })
         }
     }, [])
+
     const deleteReview = async (username, movie) => {
         await deleteReviews(username, movie)
         setReviews(
@@ -143,15 +148,29 @@ function Profile() {
             setisItFollow(false)
         }
     }
+
+
+    const lastReview = (reviews) => {
+        const s = reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        return s[0];
+    }
+
+    const mostRecentObject = lastReview(yourReview);
+
     return (
         <div className="page w-100 p-0">
-            <div className="row mb-3 g-0">
-                <div>
-                    <div className="text-center">
-                        <h5 className="my-3 text-white">{viewUser.firstName + " " + viewUser.lastName}</h5>
-                        <p className=" mb-1 text-white">{viewUser.email}</p>
-                        <p className=" mb-4 text-white">{viewUser.dob.substring(0, 10)}</p>
-                        <div className="d-flex justify-content-center mb-2">
+                        <div className="row">
+                <div className="col-5 profile">
+                    <div>
+                        <h1 className="text-center" >profile</h1>
+                        <h5 className="my-3 text-white margin-left">{viewUser.firstName + " " + viewUser.lastName}</h5>
+                        <h5 className="my-3 text-white margin-left">{viewUser.email}</h5>
+                        <p>Followers : <span className="counts " onClick={openFollower} > {follower.length} </span></p>
+                        <p>Following :  <span className="counts " onClick={openFollowing}>{following.length}</span> </p>
+                        <div>
+                        </div>
+                        <div className="margin-top  d-flex justify-content-center mb-2 ">
                             {(user._id !== viewUser._id) &&
                                 <div>
                                     {!isItFollow ?
@@ -164,12 +183,36 @@ function Profile() {
                                 <button onClick={openEditModal} className='btn btn-success ms-1 me-2'>
                                     Edit Profile
                                 </button>}
-                            <button className="btn btn-info me-2" onClick={openFollowing}>Following</button>
-                            <button className="btn btn-light" onClick={openFollower}>Follower</button>
+                                {(user.role === 'ADMIN' && user._id === viewUser._id) &&
+                                <button className='btn btn-info ms-1 me-2'>
+                                    Admin Page
+                                </button>}
+                            
                         </div>
+                
+                        
                     </div>
+
+
+                </div>
+                <div className="col-6 reviews">
+                    <h1 className="text-white">Latest Review</h1>
+                    {yourReview.length !== 0 &&
+                        <div className="text-white d-flex flex-column" style={{ width: '60rem', overflowX: 'auto' }}>
+                        <Link to={"/profile"} className="text-decoration-none">
+                            <h5>{mostRecentObject.username}</h5>
+                        </Link>
+                        <h>Date: {mostRecentObject.date}</h>
+                        <p>Movie: {mostRecentObject.movie}</p>
+                        <p>Rating: {mostRecentObject.rating}</p>
+                        <p>{mostRecentObject.review}</p>
+                    </div>
+
+                    }
                 </div>
             </div>
+
+            
             <div className="row g-0">
                 <div className="text-center">
                     <h1 className="text-white">Favorite Movie</h1>
