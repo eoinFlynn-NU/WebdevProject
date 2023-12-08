@@ -1,9 +1,12 @@
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 function FollowList({clicked, setClicked, list}) {
+    const navigate = useNavigate()
     const closeModal = () => {
         setClicked(false);
     };
+    console.log(list)
     const findUser = async (userId) => {
         const user = await findUser(userId)
         return user
@@ -24,10 +27,8 @@ function FollowList({clicked, setClicked, list}) {
                             <div className="modal-body d-flex flex-row">
                                 <ul className="list-group">
                                     {list.map((follower, index) => (
-
                                         <Link to={`/profile/${follower.follower}`}>
                                             {follower.follower}
-                                            {console.log(`/profile/${follower.follower}`)} {/* Check if this generates the expected URL */}
                                         </Link>
 
                                     ))}

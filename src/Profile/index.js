@@ -28,8 +28,9 @@ function Profile() {
         role: ""
     })
 
+
     useEffect(() => {
-        if (user._id === undefined) {
+        if (viewUser._id !== undefined) {
             findUser(userId).then((currentUser) => {
                     setViewUser(currentUser)
                 }
@@ -37,7 +38,7 @@ function Profile() {
         } else {
             setViewUser(user)
         }
-    }, [])
+    }, [userId])
     const [favoriteMovie, setYourFavoriteMovie] = useState([])
     const [yourReview, setReviews] = useState([])
     const [clicked, setClicked] = useState(false)
@@ -63,10 +64,12 @@ function Profile() {
     const openEditModal = () => {
         setEdit(true)
     }
+
+    console.log(followerClicked)
+
     useEffect(() => {
         if (viewUser.username !== "" && user.username !== undefined) {
             isItFollowing(user._id, userId).then((isItfollow) => {
-                console.log(isItfollow.length ===1)
                 setisItFollow(isItfollow.length ===1)
                 }
             )
@@ -140,9 +143,6 @@ function Profile() {
             setisItFollow(false)
         }
     }
-    console.log(following)
-    console.log(follower)
-
     return (
         <div className="page w-100 p-0">
             <div className="row mb-3 g-0">

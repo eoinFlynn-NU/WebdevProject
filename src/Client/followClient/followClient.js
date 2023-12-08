@@ -8,13 +8,11 @@ const request = axios.create({
 
 export const findFollowing = async (username) => {
     const response = await request.get(`${FOLLOW_API}/${username}/following`);
-    console.log(response.data)
     return response.data;
 }
 
 export const findFollower = async (username) => {
     const response = await request.get(`${FOLLOW_API}/${username}/followers`);
-    console.log(response.data)
     return response.data;
 }
 
@@ -30,6 +28,5 @@ export const findAll = async () => {
 
 export const isItFollowing = async (followerId, followedId) => {
     const response = await request.get(`${FOLLOW_API}/${followerId}/follows/${followedId}`);
-    console.log(response.data)
     return response.data;
 }
