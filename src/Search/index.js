@@ -1,22 +1,32 @@
 import "./search.css"
+import SearchBar from "./Searchbar";
+import UserResults from "./UserResults";
+import MovieResults from "./MovieResults";
+import { searchForUsers } from "../Client/Users/UsersClient";
+import { findMovieList } from "../Client/Movie/MovieClient";
+import {useEffect, useState} from "react";
 
 function Search(){
+    const [userResults, setUserResults] = useState([]);
+    const [movieResults, setMovieResults] = useState([]);
+    const handleSearch = async (searchTerm) => {
+        console.log('Searching for:', searchTerm);
+        setUserResults(JSON.parse(await searchForUsers(searchTerm)))
+        setMovieResults(JSON.parse(await findMovieList(searchTerm)).Search)
+      };
+    console.log(userResults)
     return(
-        <div className="home-background">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Your Website</a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <form class="form-inline ml-auto">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+        <div className="container-fluid home-background">
+            <h1 className="text-white">Search for Movies or Users</h1>
+            <SearchBar onSearch={handleSearch} />
+            <div className="row">
+                <div className="col">
+                    <MovieResults results={movieResults}/>
                 </div>
-                </nav>
+                <div className="col">
+                    <UserResults results={userResults}/>
+                </div>
+            </div>
         </div>
     )
 }
