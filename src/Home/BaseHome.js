@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {findMovieDetail} from "../Client/Detail/DetailClient";
-import {findRecentReviews} from "../Client/Reviews/ReviewClient"
+import { useEffect, useState, Component } from "react";
+import { findMovieDetail } from "../Client/Detail/DetailClient";
+import { findRecentReviews } from "../Client/Reviews/ReviewClient"
 import "./home.css"
 import ReviewList from "./ReviewLists"
 
@@ -47,13 +47,13 @@ function BaseHome() {
             <div className="row top-padding">
                 <div className="col"></div>
                 <div className="col w-auto">
-                    <img src={movie1.Poster} className="movie-poster" alt="movie poster 1"/>
+                    <img src={movie1.Poster} className="movie-poster" alt="movie poster 1" />
                 </div>
                 <div className="col w-auto">
-                    <img src={movie2.Poster} className="movie-poster" alt="movie poster 2"/>
+                    <img src={movie2.Poster} className="movie-poster" alt="movie poster 2" />
                 </div>
                 <div className="col w-auto">
-                    <img src={movie3.Poster} className="movie-poster" alt="movie poster 3"/>
+                    <img src={movie3.Poster} className="movie-poster" alt="movie poster 3" />
                 </div>
                 <div className="col"></div>
             </div>
@@ -61,7 +61,7 @@ function BaseHome() {
                 <div className="row">
                     <div className="col">
                         <h3 className="text-white">Recent Reviews</h3>
-                        {<ReviewList reviews={reviews}/>}
+                        {<ReviewList reviews={reviews} />}
                     </div>
                 </div>
             </div>

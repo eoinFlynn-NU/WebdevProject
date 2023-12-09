@@ -33,3 +33,7 @@
 .review-username {
     font-size: smaller;
 }
+
+.something {
+    display: flex
+}
