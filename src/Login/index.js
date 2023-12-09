@@ -26,13 +26,13 @@ function Login() {
                 <h1 className=" text-center">Sign In</h1>
                 <form>
                     <div className="form-group mb-2">
-                        <label htmlFor="exampleInputEmail1">Email</label>
+                        <label htmlFor="exampleInputEmail1">Username</label>
                         <input id="exampleInputEmail1" className="form-control" value={credentials.username}
                                onChange={(e) => setCredentials({...credentials, username: e.target.value})}/>
                     </div>
                     <div className="form-group mb-3">
                         <label htmlFor="exampleInputPassword1">Password</label>
-                        <input id="exampleInputPassword1" className="form-control" value={credentials.password}
+                        <input id="exampleInputPassword1" type="password" className="form-control" value={credentials.password}
                                onChange={(e) => setCredentials({...credentials, password: e.target.value})}/>
                     </div>
                     <div className="d-flex flex-row">

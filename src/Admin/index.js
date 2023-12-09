@@ -14,6 +14,11 @@ function Admin() {
     };
     useEffect(() => { fetchUsers(); }, []);
   
+    const navigate = useNavigate();
+    const goToUserPage = (userId) => {
+        navigate(`/profile/${userId}`);
+    }
+
     return(
         <div className="home-background">
             <h1 className="text">Admin Page</h1>
@@ -39,7 +44,7 @@ function Admin() {
               <td>
                 <div>
                 
-                    <button className="btn btn-light margin-left"><FaRegUserCircle /> </button>
+                    <button className="btn btn-light margin-left" onClick={() => goToUserPage(user._id)}><FaRegUserCircle /> </button>
                     <button className="btn btn-light margin-left"><BsPencil /> </button>
                     <button className="btn btn-danger margin-left"><BsTrash3Fill /> </button>
               </div>
