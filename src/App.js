@@ -18,7 +18,7 @@ function App() {
     return (
         <Provider store={store}>
             <HashRouter>
-                <div className="html w-100">
+                <div className="html w-100 h-100">
                     <Nav/>
                     <Routes>
                         <Route path='/' element={<Navigate to="/home"/>}/>

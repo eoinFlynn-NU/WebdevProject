@@ -165,7 +165,7 @@ function Profile() {
     const mostRecentObject = lastReview(yourReview);
 
     return (
-        <div className="page w-100 p-0">
+        <div className="page w-100 p-0" style={{height: "100vh"}}>
             <div className="row">
                 <div className="profile">
                     <div>
@@ -221,15 +221,20 @@ function Profile() {
             {/*    }*/}
             {/*</div>*/}
 
-            <div className="row g-0">
+            <div className="row g-0 h-100 movieList">
                 <div className="text-center">
                     <h1 className="text-white">Favorite Movie</h1>
                 </div>
-                <div className="d-flex flex-wrap flex-row align-items-center justify-content-center">
+                <div className="d-flex flex-wrap justify-content-center">
                     {
                         favoriteMovie.map((movie, index) => (
-                            <MovieCards sameUser={sameUser} key={index} movies={movie} favoriteMovie={favoriteMovie}
-                                        setYourFavoriteMovie={setYourFavoriteMovie}/>
+                            <MovieCards
+                                sameUser={sameUser}
+                                key={index}
+                                movies={movie}
+                                favoriteMovie={favoriteMovie}
+                                setYourFavoriteMovie={setYourFavoriteMovie}
+                            />
                         ))
                     }
                 </div>
