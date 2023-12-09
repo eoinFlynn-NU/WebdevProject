@@ -29,3 +29,8 @@ export const findAllUsers = async () => {
     return response.data;
   };
   
+  export const deleteUser = async (user) => {
+    const response = await request.delete(`${USERS_API}/${user._id}`);
+    return response.data;
+  };
+  

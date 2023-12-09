@@ -6,7 +6,7 @@ function Register() {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({
         firstname: "", lastname: "",
-        username: "", password: "", role: ""
+        username: "", password: "", role: "", dob: "2000-01-01"
     });
     const navigate = useNavigate();
     const signUp = async () => {
