@@ -95,7 +95,7 @@ function Details() {
         }
     }
     return (
-        <div className="page w-100 h-auto d-flex flex-column">
+        <div className="page w-100 d-flex flex-column" style={{height: "100vh"}}>
             <div className="main-content pt-5 d-flex flex-row ms-5 me-5">
                 <div className="me-5 ">
                     <img src={movie.Poster} className="" alt="Responsive image"/>
@@ -151,7 +151,7 @@ function Details() {
                 </div>
             }
             {(reviews.length > 1) &&
-                <div className="reviews ms-5 me-5 pt-4">
+                <div className="reviews ps-5 pe-5">
                     <h2 className="text-white">Review</h2>
                     <ul className="list-group list-group-flush">
                         {
