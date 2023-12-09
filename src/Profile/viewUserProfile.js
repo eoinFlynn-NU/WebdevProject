@@ -165,9 +165,8 @@ function Profile() {
     }
 
     const mostRecentObject = lastReview(yourReview);
-    console.log(following)
     return (
-        <div className="page w-100 p-0" style={{height: "100vh"}}>
+        <div className="page w-100 p-0" style={{height: "100VW"}}>
             <div className="row">
                 <div className=" profile">
                     <div>

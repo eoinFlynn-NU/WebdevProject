@@ -41,6 +41,7 @@ function FollowList({list, followerList}) {
         }
 
     }, [clicked, list, followerList]);
+    console.log(clicked)
     return (
         <div>
             {clicked && (

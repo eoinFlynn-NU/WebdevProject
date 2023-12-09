@@ -67,6 +67,7 @@ function Profile() {
         setClicked(true)
     }
     const openFollowing = () => {
+        console.log(followingClicked)
         dispatch(updateFollowing(true))
     }
 
@@ -165,7 +166,7 @@ function Profile() {
     const mostRecentObject = lastReview(yourReview);
 
     return (
-        <div className="page w-100 p-0" style={{height: "100vh"}}>
+        <div className="page w-100 p-0" style={{height: "100%"}}>
             <div className="row">
                 <div className="profile">
                     <div>
@@ -222,26 +223,31 @@ function Profile() {
             {/*</div>*/}
 
             <div className="row g-0 h-100 movieList">
-                <div className="text-center">
-                    <h1 className="text-white">Favorite Movie</h1>
-                </div>
-                <div className="d-flex flex-wrap justify-content-center">
-                    {
-                        favoriteMovie.map((movie, index) => (
-                            <MovieCards
-                                sameUser={sameUser}
-                                key={index}
-                                movies={movie}
-                                favoriteMovie={favoriteMovie}
-                                setYourFavoriteMovie={setYourFavoriteMovie}
-                            />
-                        ))
-                    }
-                </div>
+                {favoriteMovie.length > 1 &&
+                    <div>
+                        <div className="text-center">
+                            <h1 className="text-white">Favorite Movie</h1>
+                        </div>
+                        <div className="d-flex flex-wrap justify-content-center">
+                            {
+                                favoriteMovie.map((movie, index) => (
+                                    <MovieCards
+                                        sameUser={sameUser}
+                                        key={index}
+                                        movies={movie}
+                                        favoriteMovie={favoriteMovie}
+                                        setYourFavoriteMovie={setYourFavoriteMovie}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </div>
+                }
             </div>
             <div className="row g-0 ">
                 {yourReview.length !== 0 &&
-                    <div className="reviews ms-auto me-auto pt-4 align-content-center" style={{ width: '60rem', overflowX: 'auto' }}>
+                    <div className="reviews ms-auto me-auto pt-4 align-content-center"
+                         style={{width: '60rem', overflowX: 'auto'}}>
                         <h2 className="text-white">Review</h2>
 
                         <ul className="list-group list-group-flush">
@@ -261,11 +267,12 @@ function Profile() {
                                                 </div>
                                                 {(user._id === viewUser._id) &&
                                                     <div className="ms-auto">
-                                                        <button onClick={() => deleteReview(review.username, review.movie)}
+                                                        <button
+                                                            onClick={() => deleteReview(review.username, review.movie)}
                                                             className="btn btn-danger me-2">Delete
                                                         </button>
                                                         <button onClick={() => openModal(review)}
-                                                            className="btn btn-secondary">Modify
+                                                                className="btn btn-secondary">Modify
                                                         </button>
                                                     </div>
                                                 }
@@ -274,16 +281,15 @@ function Profile() {
                                     ))
                             }
                         </ul>
-                        {followerClicked && <FollowList list={follower} followerList={true}/>}
-                        {followingClicked && <FollowList  list={following} followerList={false} />}
-                        {clicked &&
-                            <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews}
-                                yourReivew={currentReview} listReivews={yourReview} />}
-                        {edit && <EditProfile setEdit={setEdit} edit={edit} />}
-
                     </div>
                 }
             </div>
+            {followerClicked && <FollowList list={follower} followerList={true}/>}
+            {followingClicked && <FollowList list={following} followerList={false}/>}
+            {clicked &&
+                <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews}
+                                  yourReivew={currentReview} listReivews={yourReview}/>}
+            {edit && <EditProfile setEdit={setEdit} edit={edit}/>}
         </div>
 
     )
