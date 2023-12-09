@@ -16,8 +16,15 @@ export const findFollower = async (username) => {
     return response.data;
 }
 
-export const followUser = async (followerId, followedId) => {
+export const followUserClient = async (followerId, followedId) => {
     const response = await request.post(`${FOLLOW_API}/${followerId}/follows/${followedId}`);
+    console.log(response.data)
+    return response.data;
+}
+
+export const unFollowUserClient = async (followerId, followedId) => {
+    const response = await request.delete(`${FOLLOW_API}/${followerId}/follows/${followedId}`);
+    console.log(response.data)
     return response.data;
 }
 

@@ -1,27 +1,16 @@
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
-import {updateFollowing} from "../../Reducer/followingReducer";
-import {updateFollower} from "../../Reducer/followerReducer";
 import {useEffect, useState} from "react";
+import {findFollower, findFollowing} from "../../Client/followClient/followClient";
+import {click} from "@testing-library/user-event/dist/click";
 import {findUser} from "../../Client/Account /AccountClient";
 
-function FollowList({list, followerList}) {
+function ViewFollowList({clicked, setClicked, list ,followerList}) {
     const navigate = useNavigate()
-    let followerClicked = useSelector((state) => state.followerReducer.follower)
-    let followingClicked = useSelector((state) => state.followingReducer.following)
     const [userNames, setUserNames] = useState([]);
 
-    const dispatch = useDispatch();
-    let clicked = (followerClicked || followingClicked)
     const closeModal = () => {
-        if (followerClicked){
-            dispatch(updateFollower(false))
-        }else{
-            dispatch(updateFollowing(false))
-
-        }
-
+        setClicked(false);
     };
 
     useEffect(() => {
@@ -41,14 +30,16 @@ function FollowList({list, followerList}) {
         }
 
     }, [clicked, list, followerList]);
+
+    console.log(userNames)
     return (
         <div>
             {clicked && (
-                <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block' }}>
+                <div className="modal" tabIndex="-1" role="dialog" style={{display: 'block'}}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title text-black">{followerClicked ? "Follower" : "Following"}</h5>
+                                <h5 className="modal-title text-black">{followerList ? "Follower" : "Following"}</h5>
                                 <button type="button" className="close btn btn-danger" onClick={closeModal}
                                         aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -68,10 +59,9 @@ function FollowList({list, followerList}) {
                     </div>
                 </div>
             )}
-            {/* Backdrop for the modal (optional) */}
-            {clicked && <div className="modal-backdrop show" onClick={closeModal}></div>}
+            {click && <div className="modal-backdrop show" onClick={closeModal}></div>}
         </div>
     )
 }
 
-export default FollowList;
+export default ViewFollowList;

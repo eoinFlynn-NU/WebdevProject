@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import "./index.css"
 import MovieCards from "../Componets/MovieCards";
 import {useEffect, useState} from "react";
@@ -8,19 +8,19 @@ import {findMoviedByUser} from "../Client/LikedMovieClient/LikedMovieClient";
 import ReviewForProfile from "../ReviewForProfile";
 import EditProfile from "../EditProfile";
 import {findUser} from "../Client/Account /AccountClient";
-import FollowList from "../Componets/followList";
 import {useNavigate} from "react-router";
-import {findFollower, findFollowing, isItFollowing} from "../Client/followClient/followClient";
-import {updateFollower} from "../Reducer/followerReducer";
-import {updateFollowing} from "../Reducer/followingReducer";
+import {
+    findFollower,
+    findFollowing,
+    followUser,
+    followUserClient,
+    isItFollowing, unFollowUserClient
+} from "../Client/followClient/followClient";
+import ViewFollowList from "../Componets/followList/ViewFollowList";
 
 function Profile() {
     let {userId} = useParams()
-    const dispatch = useDispatch();
     let user = useSelector((state) => state.userReducer.user)
-    let followerClicked = useSelector((state) => state.followerReducer.follower)
-    let followingClicked = useSelector((state) => state.followingReducer.following)
-
     if (userId === undefined) {
         userId = user._id
     }
@@ -39,18 +39,20 @@ function Profile() {
     useEffect(() => {
         if (viewUser._id !== undefined) {
             findUser(userId).then((currentUser) => {
-                setViewUser(currentUser)
-            }
+                    setViewUser(currentUser)
+                }
             )
         } else {
             setViewUser(user)
         }
-    }, [userId, user, viewUser._id])
+    }, [userId])
     const [favoriteMovie, setYourFavoriteMovie] = useState([])
     const [yourReview, setReviews] = useState([])
     const [clicked, setClicked] = useState(false)
     const [edit, setEdit] = useState(false)
     const [currentReview, setCurrentReview] = useState()
+    const [followingClicked, setFollowingClicked] = useState(false)
+    const [followerClicked, setFollowerClicked] = useState(false)
     const [following, setFollowing] = useState([])
     const [follower, setFollower] = useState([])
     const sameUser = user._id === viewUser._id
@@ -67,11 +69,11 @@ function Profile() {
         setClicked(true)
     }
     const openFollowing = () => {
-        dispatch(updateFollowing(true))
+        setFollowingClicked(true);
     }
 
     const openFollower = () => {
-        dispatch(updateFollower(true))
+        setFollowerClicked(true);
     }
     const openEditModal = () => {
         setEdit(true)
@@ -80,8 +82,8 @@ function Profile() {
     useEffect(() => {
         if (viewUser.username !== "" && user.username !== undefined) {
             isItFollowing(user._id, userId).then((isItfollow) => {
-                setisItFollow(isItfollow.length === 1)
-            }
+                    setisItFollow(isItfollow.length === 1)
+                }
             )
         }
     }, [viewUser, user._id, user.username, userId])
@@ -112,11 +114,11 @@ function Profile() {
                 })
         } else {
             findFollowing(viewUser._id).then(
-                follower => {
-                    setFollowing(follower)
+                following => {
+                    setFollowing(following)
                 })
         }
-    }, [user._id, user.username, viewUser._id, viewUser.username])
+    }, [user._id, user.username, viewUser._id, viewUser.username, followerClicked, isItFollow])
 
     useEffect(() => {
         if (viewUser.username === undefined && user.username !== "") {
@@ -130,7 +132,7 @@ function Profile() {
                     setFollower(follower)
                 })
         }
-    }, [user._id, user.username, viewUser._id, viewUser.username])
+    }, [user._id, user.username, viewUser._id, viewUser.username, followerClicked, isItFollow])
 
     const deleteReview = async (username, movie) => {
         await deleteReviews(username, movie)
@@ -143,14 +145,14 @@ function Profile() {
         // followerId = user._id
         // followId = id
         if (user._id !== undefined) {
-            await followUser(user._id, userId)
+            await followUserClient(user._id, userId)
             setisItFollow(true)
         }
     }
 
     const unfollowUser = async () => {
         if (user._id !== undefined) {
-            await unfollowUser(user._id, userId)
+            await unFollowUserClient( user._id, userId)
             setisItFollow(false)
         }
     }
@@ -163,20 +165,20 @@ function Profile() {
     }
 
     const mostRecentObject = lastReview(yourReview);
-
+    console.log(following)
     return (
         <div className="page w-100 p-0">
             <div className="row">
-                <div className="profile">
+                <div className=" profile">
                     <div>
                         <h1 className="text-center">profile</h1>
                         <h5 className="my-3 text-white margin-left">{viewUser.firstName + " " + viewUser.lastName}</h5>
                         <h5 className="my-3 text-white margin-left">{viewUser.email}</h5>
-                        <p>Followers : <span className="counts "> {follower.length} </span></p>
-                        <p>Following : <span className="counts ">{following.length}</span></p>
+                        <p>Followers : <span className="counts " onClick={openFollower}> {follower.length} </span></p>
+                        <p>Following : <span className="counts " onClick={openFollowing}>{following.length}</span></p>
                         <div>
                         </div>
-                        <div className="margin-top  d-flex justify-content-center mb-2 ">
+                        <div className="margin-top d-flex justify-content-center mb-2 ">
                             {(user._id !== viewUser._id) &&
                                 <div>
                                     {!isItFollow ?
@@ -205,21 +207,7 @@ function Profile() {
                     </div>
                 </div>
             </div>
-            {/*<div className="row reviews">*/}
-            {/*    <h1 className="text-white">Latest Review</h1>*/}
-            {/*    {yourReview.length !== 0 &&*/}
-            {/*        <div className="text-white d-flex flex-column" style={{ width: '60rem', overflowX: 'auto' }}>*/}
-            {/*            <Link to={"/profile"} className="text-decoration-none">*/}
-            {/*                <h5>{mostRecentObject.username}</h5>*/}
-            {/*            </Link>*/}
-            {/*            <h>Date: {mostRecentObject.date}</h>*/}
-            {/*            <p>Movie: {mostRecentObject.movie}</p>*/}
-            {/*            <p>Rating: {mostRecentObject.rating}</p>*/}
-            {/*            <p>{mostRecentObject.review}</p>*/}
-            {/*        </div>*/}
 
-            {/*    }*/}
-            {/*</div>*/}
 
             <div className="row g-0">
                 <div className="text-center">
@@ -236,7 +224,8 @@ function Profile() {
             </div>
             <div className="row g-0 ">
                 {yourReview.length !== 0 &&
-                    <div className="reviews ms-auto me-auto pt-4 align-content-center" style={{ width: '60rem', overflowX: 'auto' }}>
+                    <div className="reviews ms-auto me-auto pt-4 align-content-center"
+                         style={{width: '60rem', overflowX: 'auto'}}>
                         <h2 className="text-white">Review</h2>
 
                         <ul className="list-group list-group-flush">
@@ -256,11 +245,12 @@ function Profile() {
                                                 </div>
                                                 {(user._id === viewUser._id) &&
                                                     <div className="ms-auto">
-                                                        <button onClick={() => deleteReview(review.username, review.movie)}
+                                                        <button
+                                                            onClick={() => deleteReview(review.username, review.movie)}
                                                             className="btn btn-danger me-2">Delete
                                                         </button>
                                                         <button onClick={() => openModal(review)}
-                                                            className="btn btn-secondary">Modify
+                                                                className="btn btn-secondary">Modify
                                                         </button>
                                                     </div>
                                                 }
@@ -269,16 +259,19 @@ function Profile() {
                                     ))
                             }
                         </ul>
-                        {followerClicked && <FollowList list={follower} followerList={true}/>}
-                        {followingClicked && <FollowList  list={following} followerList={false} />}
-                        {clicked &&
-                            <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews}
-                                yourReivew={currentReview} listReivews={yourReview} />}
-                        {edit && <EditProfile setEdit={setEdit} edit={edit} />}
-
                     </div>
                 }
             </div>
+            {clicked &&
+                <ReviewForProfile clicked={clicked} setClicked={setClicked} setYourReview={setReviews}
+                                  yourReivew={currentReview} listReivews={yourReview}/>}
+            {edit && <EditProfile setEdit={setEdit} edit={edit}/>}
+            {followerClicked &&
+                <ViewFollowList clicked={followerClicked} list={follower} setClicked={setFollowerClicked} userId={userId}
+                                followerList={true}/>}
+            {followingClicked &&
+                <ViewFollowList clicked={followingClicked} list={following} setClicked={setFollowingClicked} userId={userId}
+                                followerList={false}/>}
         </div>
 
     )
