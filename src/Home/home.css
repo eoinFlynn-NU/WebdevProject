@@ -11,9 +11,21 @@
     color: white;
 }
 
+.something {
+    display: flex;
+}
+
+.white-line{
+    margin-left: 5px;
+    margin-right: 5px;
+    color: white;
+    height: "4px",
+}
 .movie-poster {
     width: 15em;
     height: 18em;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .review-poster {
@@ -37,3 +49,19 @@
 .something {
     display: flex
 }
+
+.list-settings {
+    margin-left: 50px;
+    margin-right: 50px;
+    /* background-color: black; */
+    border-style: none !important;
+}
+
+
+  .som {
+    background-color: rgb(29, 28, 28)  !important; 
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px !important; 
+    border-color: none;
+  }

@@ -14,7 +14,6 @@ function Admin() {
     const [users, setUsers] = useState([]);
     const dispatch = useDispatch();
     const [edit, setEdit] = useState(false)
-
     const selectUser = async (user) => {
         try {
         setEdit(true)

@@ -23,7 +23,7 @@ function BaseHome() {
             }
         )
     }, []);
-    const movieTitle3 = "Mad Max: Fury Road"
+    const movieTitle3 = "Star Wars: Episode IV - A New Hope"
     const [movie3, setMovie3] = useState([])
     useEffect(() => {
         findMovieDetail(movieTitle3).then(
@@ -32,8 +32,38 @@ function BaseHome() {
             }
         )
     }, []);
-    const [reviews, setReviews] = useState([]);
+    
+    const movieTitle4 = "Mad Max: Fury Road"
+    const [movie4, setMovie4] = useState([])
+    useEffect(() => {
+        findMovieDetail(movieTitle4).then(
+            movie4 => {
+                setMovie4(movie4)
+            }
+        )
+    }, []);
 
+    const movieTitle5 = "Pulp Fiction"
+    const [movie5, setMovie5] = useState([])
+    useEffect(() => {
+        findMovieDetail(movieTitle5).then(
+            movie5 => {
+                setMovie5(movie5)
+            }
+        )
+    }, []);
+
+    const movieTitle6 = "Pirates of the Caribbean: The Curse of the Black Pearl"
+    const [movie6, setMovie6] = useState([])
+    useEffect(() => {
+        findMovieDetail(movieTitle6).then(
+            movie6 => {
+                setMovie6(movie6)
+            }
+        )
+    }, []);
+
+    const [reviews, setReviews] = useState([]);
     useEffect(() => {
         findRecentReviews().then(
             reviews => {
@@ -44,19 +74,31 @@ function BaseHome() {
     return (
         <div>
             <h3 className="text-center text-white top-padding">The #1 movie review website for Northeastern students</h3>
-            <div className="row top-padding">
-                <div className="col"></div>
-                <div className="col w-auto">
+            <div className="top-padding">
+                <h4 className="text-white">Our Favorite Movies so Far</h4>
+                <hr className="white-line"/> 
+            <div className="something">
+                <div>
                     <img src={movie1.Poster} className="movie-poster" alt="movie poster 1" />
                 </div>
-                <div className="col w-auto">
+                <div>
                     <img src={movie2.Poster} className="movie-poster" alt="movie poster 2" />
                 </div>
-                <div className="col w-auto">
+                <div>
                     <img src={movie3.Poster} className="movie-poster" alt="movie poster 3" />
                 </div>
-                <div className="col"></div>
+                <div>
+                    <img src={movie4.Poster} className="movie-poster" alt="movie poster 3" />
+                </div>
+                <div>
+                    <img src={movie5.Poster} className="movie-poster" alt="movie poster 3" />
+                </div>
+                <div>
+                    <img src={movie6.Poster} className="movie-poster" alt="movie poster 3" />
+                </div>
             </div>
+            </div>
+
             <div className="container-fluid top-padding side-padding home-background ">
                 <div className="row">
                     <div className="col">
