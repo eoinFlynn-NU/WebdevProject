@@ -22,7 +22,7 @@ function ReviewForProfile({clicked, setClicked, setYourReview, yourReivew, listR
                 setMovie(movie)
             }
         )
-    }, []);
+    }, [yourReivew.movie]);
 
     const closeModal = () => {
         setClicked(false);

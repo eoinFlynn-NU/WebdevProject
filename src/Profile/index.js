@@ -167,12 +167,14 @@ function Profile() {
 
     return (
         <div className="page w-100 p-0" style={{height: "100%"}}>
-            <div className="row">
-                <div className="profile">
+            <div className="row w-auto">
+                <div className="profile" style={{padding: 0}}>
                     <div>
                         <h1 className="text-center">profile</h1>
                         <h5 className="my-3 text-white margin-left">{viewUser.firstName + " " + viewUser.lastName}</h5>
                         <h5 className="my-3 text-white margin-left">{viewUser.email}</h5>
+                        <h5 className="my-3 text-white margin-left">{"Username: " + viewUser.username }</h5>
+                        <h5 className="my-3 text-white margin-left">{"Password: " + viewUser.password}</h5>
                         <p>Followers : <span className="counts "> {follower.length} </span></p>
                         <p>Following : <span className="counts ">{following.length}</span></p>
                         <div>
@@ -244,7 +246,7 @@ function Profile() {
                     </div>
                 }
             </div>
-            <div className="row g-0 ">
+            <div className="row g-0 review-list">
                 {yourReview.length !== 0 &&
                     <div className="reviews ms-auto me-auto pt-4 align-content-center"
                          style={{width: '60rem', overflowX: 'auto'}}>

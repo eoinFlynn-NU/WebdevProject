@@ -40,6 +40,11 @@
     flex: 1; /* This will make the content fill the available space */
 }
 
+.review-list{
+    background: linear-gradient(to right, #434343 0%, black 100%);
+
+}
+
 
 /*.card-body p{*/
 /*    color: white;*/
