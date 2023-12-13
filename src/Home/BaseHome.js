@@ -77,7 +77,7 @@ function BaseHome() {
             <div className="top-padding">
                 <h4 className="text-white">Our Favorite Movies so Far</h4>
                 <hr className="white-line"/> 
-            <div className="something">
+            <div className="something d-flex flex-wrap justify-content-center">
                 <div>
                     <img src={movie1.Poster} className="movie-poster" alt="movie poster 1" />
                 </div>
@@ -92,9 +92,6 @@ function BaseHome() {
                 </div>
                 <div>
                     <img src={movie5.Poster} className="movie-poster" alt="movie poster 3" />
-                </div>
-                <div>
-                    <img src={movie6.Poster} className="movie-poster" alt="movie poster 3" />
                 </div>
             </div>
             </div>

@@ -45,20 +45,20 @@ function LoggedInHome() {
         )
     }, []);
     return (
-        <div>
+        <div className="w-auto" style={{padding: "0px", overflowX: "hidden"}}>
             <h3 className="text-center text-white top-padding">Welcome {usersName}</h3>
             <div className="row top-padding">
-                <div className="col"></div>
-                <div className="col w-auto">
-                    <img src={movie1.Poster} className="movie-poster" alt="movie poster 1"/>
+                <div className="d-flex flex-wrap justify-content-center" style={{padding: "0px", overflowX: "hidden"}}>
+                    <div>
+                        <img src={movie1.Poster} className="movie-poster" alt="movie poster 1"/>
+                    </div>
+                    <div >
+                        <img src={movie2.Poster} className="movie-poster" alt="movie poster 2"/>
+                    </div>
+                    <div>
+                        <img src={movie3.Poster} className="movie-poster" alt="movie poster 3"/>
+                    </div>
                 </div>
-                <div className="col w-auto">
-                    <img src={movie2.Poster} className="movie-poster" alt="movie poster 2"/>
-                </div>
-                <div className="col w-auto">
-                    <img src={movie3.Poster} className="movie-poster" alt="movie poster 3"/>
-                </div>
-                <div className="col"></div>
             </div>
             <div className="container-fluid top-padding side-padding home-background ">
                 <div className="row">

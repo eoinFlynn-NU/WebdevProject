@@ -166,7 +166,7 @@ function Profile() {
     const mostRecentObject = lastReview(yourReview);
 
     return (
-        <div className="page w-100 p-0" style={{height: "100%"}}>
+        <div className="page w-100 p-0"  style={{height: "100%", padding: "0px", overflowX: "hidden"}}>
             <div className="row w-auto">
                 <div className="profile" style={{padding: 0}}>
                     <div>
