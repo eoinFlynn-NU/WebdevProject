@@ -57,7 +57,7 @@ function Search(){
         }
     }
     useEffect(() => {
-        console.log("Search term after Refresh:", search);
+        console.log("Search term on useEffect:", search);
         // const storedResults = localStorage.getItem('movieResults');
         // if (storedResults && search !== "") {
         //     setMovieResults(JSON.parse(storedResults));
@@ -68,7 +68,7 @@ function Search(){
         if (search !== "") {
             handleSearch(search);
         }
-    }, [])
+    }, [search])
     useEffect(() => {
         const handleBeforeUnload = () => {
             handleSearch(search)
@@ -85,24 +85,22 @@ function Search(){
             <h1 className="text-white">Search for Movies or Users</h1>
             <SearchBar onSearch={handleSearch} />
             <div className="row">
-                <div className="col-8">
-                    <h3 className="text-white">Movies</h3>
-                    <MovieResults results={movieResults}/>
-                </div>
-                <div className="col">
-                    <h3 className="text-white">Users</h3>
-                    <UserResults results={userResults}/>
-                </div>
-            </div>
-            {
+                <div className="col"></div>
+                <div className="col-8 top-margin">
+                {
                 currPage > 0 &&
                 <div>
                     {
                         allowPrevPage && <button className="btn btn-primary" onClick={previousPage}>Previous Page</button>
                     }
-                    { allowNextPage && <button className="btn btn-primary" onClick={nextPage}>Next Page</button>}
+                    { allowNextPage && <button className="btn btn-primary left-margin" onClick={nextPage}>Next Page</button>}
                 </div> 
-            }
+                }
+                    <MovieResults results={movieResults}/>
+                </div>
+                <div className="col">
+                </div>
+            </div>
         </div>
     )
 }
