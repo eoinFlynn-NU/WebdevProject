@@ -2,31 +2,24 @@
 import {useEffect, useState} from "react";
 import {findMovieDetail} from "../Client/Detail/DetailClient";
 import "./home.css"
+import {post} from "axios";
 
 function ReviewList({reviews}) {
     const reviewMovieTitles = reviews.map(r => r.movie)
+    const [posters, setPosters] = useState([]);
 
-    const fetchMovies = async () => {
-        try {
-          const movies = await Promise.all(reviewMovieTitles.map(title => findMovieDetail(title)));
-          return movies
-        } catch (error) {
-          console.error('Error fetching movies:', error);
-        }
-      };
-      const [posters, setPosters] = useState([]);
-
-      useEffect(() => {
-          fetchMovies().then(movies => {
-            console.log('Movies:', movies)
-            const posters = movies.map(movie => movie.Poster)
-            console.log("Posters:", posters)
+    useEffect(() => {
+        async function fetchPosters() {
+            const posters = await Promise.all(
+                reviews.map(async (r) => {
+                    const movieInfo = await findMovieDetail(r.movie);
+                    return movieInfo.Poster;
+                })
+            );
             setPosters(posters);
-            localStorage.setItem('posters', JSON.stringify(posters));
-          });
-        //}
-      }, []);
-
+        }
+        fetchPosters();
+    }, [reviews]);
 
     return (
         <div className="home-background">

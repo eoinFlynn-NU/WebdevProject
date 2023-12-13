@@ -5,7 +5,7 @@ import * as client from "../Client/Detail/DetailClient";
 function Register() {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({
-        firstname: "", lastname: "",
+        firstName: "", lastName: "",
         username: "", password: "", role: "", dob: "2000-01-01"
     });
     const navigate = useNavigate();
@@ -26,13 +26,13 @@ function Register() {
                     <div className="d-flex flex-row mb-2">
                         <div className="form-group form-control-sm">
                             <label htmlFor="exampleInputEmail1">First Name</label>
-                            <input id="exampleInputEmail1" className="form-control" value={credentials.firstname}
-                                   onChange={(e) => setCredentials({...credentials, firstname: e.target.value})}/>
+                            <input id="exampleInputEmail1" className="form-control" value={credentials.firstName}
+                                   onChange={(e) => setCredentials({...credentials, firstName: e.target.value})}/>
                         </div>
                         <div className="form-group ms-auto form-control-sm">
                             <label htmlFor="exampleInputEmail1">Last Name</label>
-                            <input id="exampleInputEmail1" className="form-control" value={credentials.lastname}
-                                   onChange={(e) => setCredentials({...credentials, lastname: e.target.value})}/>
+                            <input id="exampleInputEmail1" className="form-control" value={credentials.lastName}
+                                   onChange={(e) => setCredentials({...credentials, lastName: e.target.value})}/>
                         </div>
                     </div>
                     <div className="form-group mb-2 form-control-sm">
