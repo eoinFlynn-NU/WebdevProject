@@ -5,6 +5,7 @@ import userReducer from "../Reducer/userReducer";
 import followingReducer from "../Reducer/followingReducer";
 import followerReducer from "../Reducer/followerReducer";
 import searchReducer from "../Reducer/searchReducer";
+import randomMovieReducer from "../Reducer/randomMovieReducer";
 
 const persistConfig = {
     key: 'root', // Key to uniquely identify your application's storage
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     followingReducer,
     followerReducer,
     searchReducer,
+    randomMovieReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

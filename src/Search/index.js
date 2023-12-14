@@ -18,7 +18,6 @@ function Search(){
     const [allowNextPage, setAllowNextPage] = useState(true);
     const [allowPrevPage, setAllowPrevPage] = useState(true);
     const dispatch = useDispatch()
-    console.log(search)
     const handleSearch = async (searchTerm) => {
         let response
         console.log("handleSearch search:", search)

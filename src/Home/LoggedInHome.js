@@ -4,10 +4,14 @@ import {findMovieDetail} from "../Client/Detail/DetailClient";
 import {findRecentReviews, findRecentReviewsByUsername} from "../Client/Reviews/ReviewClient"
 import "./home.css"
 import ReviewList from "./ReviewLists"
+import {findRandomMovie} from "../Client/Movie/MovieClient";
+import MovieCards from "../Componets/MovieCards";
+import HomeMovieCards from "../Componets/HomeMovieCard";
 
 function LoggedInHome() {
     const movieTitle1 = "The Dark Knight"
     const [movie1, setMovie1] = useState([])
+    const [randMovie, setRandMovie] = useState([])
     useEffect(() => {
         findMovieDetail(movieTitle1).then(
             movie1 => {
@@ -44,6 +48,15 @@ function LoggedInHome() {
             }
         )
     }, []);
+
+    useEffect( ()=>{
+        findRandomMovie().then(
+            movie =>{
+                setRandMovie(movie)
+            }
+        )
+    },[])
+    console.log(randMovie)
     return (
         <div className="w-auto" style={{padding: "0px", overflowX: "hidden"}}>
             <h3 className="text-center text-white top-padding">Welcome {usersName}</h3>
@@ -60,10 +73,26 @@ function LoggedInHome() {
                     </div>
                 </div>
             </div>
+            <div>
+                <div className="row">
+                    <div className="text-center">
+                        <h1 className="text-white">Movie Suggestion</h1>
+                    </div>
+                    <div className="d-flex flex-wrap justify-content-center">
+                        {
+                            randMovie.map((movie, index) => (
+                                <HomeMovieCards
+                                    movies={movie}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
             <div className="container-fluid top-padding side-padding home-background ">
                 <div className="row">
                     <div className="col">
-                        {reviews.length > 0 ? 
+                        {reviews.length > 0 ?
                         <div>
                             <h3 className="text-white">Recent Reviews</h3>
                             <ReviewList reviews={reviews}/>
